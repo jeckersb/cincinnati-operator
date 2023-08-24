@@ -617,10 +617,6 @@ func (k *kubeResources) newGraphBuilderVolumeMounts(instance *cv1.UpdateService)
 			MountPath: "/etc/configs",
 		},
 		{
-			Name:      "cincinnati-graph-data",
-			MountPath: "/var/lib/cincinnati/graph-data",
-		},
-		{
 			Name:      namePullSecret,
 			ReadOnly:  true,
 			MountPath: "/var/lib/cincinnati/registry-credentials",
