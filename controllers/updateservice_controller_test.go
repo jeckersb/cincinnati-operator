@@ -386,17 +386,16 @@ func TestEnsureDeployment(t *testing.T) {
 			assert.Equal(t, found.Spec.Replicas, &updateservice.Spec.Replicas)
 
 			assert.Equal(t, found.Spec.Template.Spec.Volumes[0].Name, "configs")
-			assert.Equal(t, found.Spec.Template.Spec.Volumes[1].Name, "cincinnati-graph-data")
 
 			assert.Equal(t, found.Spec.Template.Spec.Containers[0].Name, resources.graphBuilderContainer.Name)
 			assert.Equal(t, found.Spec.Template.Spec.Containers[1].Image, resources.graphBuilderContainer.Image)
 			assert.Equal(t, found.Spec.Template.Spec.Containers[1].Name, resources.policyEngineContainer.Name)
 			assert.Equal(t, found.Spec.Template.Spec.Containers[1].Image, resources.graphBuilderContainer.Image)
-			assert.Equal(t, found.Spec.Template.Spec.Volumes[2].Name, namePullSecret)
+			assert.Equal(t, found.Spec.Template.Spec.Volumes[1].Name, namePullSecret)
 			assert.Equal(t, found.Spec.Template.Spec.Containers[0].VolumeMounts[2].Name, namePullSecret)
 
 			if test.caCert {
-				assert.Equal(t, found.Spec.Template.Spec.Volumes[3].Name, NameTrustedCAVolume)
+				assert.Equal(t, found.Spec.Template.Spec.Volumes[2].Name, NameTrustedCAVolume)
 				assert.Equal(t, found.Spec.Template.Spec.Containers[0].VolumeMounts[3].Name, NameTrustedCAVolume)
 			}
 
