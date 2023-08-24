@@ -35,7 +35,7 @@ const (
 	testOperandImage            = "testOperandImage"
 	testReplicas                = 1
 	testReleases                = "testRegistry/testRepository"
-	testGraphDataImage          = "testGraphDataImage"
+	testGraphDataImage          = "testGraphDataRegistry/testGraphDataImage"
 	testConfigMap               = "testConfigMap"
 )
 
@@ -392,15 +392,13 @@ func TestEnsureDeployment(t *testing.T) {
 			assert.Equal(t, found.Spec.Template.Spec.Containers[1].Name, resources.policyEngineContainer.Name)
 			assert.Equal(t, found.Spec.Template.Spec.Containers[1].Image, resources.graphBuilderContainer.Image)
 			assert.Equal(t, found.Spec.Template.Spec.Volumes[1].Name, namePullSecret)
-			assert.Equal(t, found.Spec.Template.Spec.Containers[0].VolumeMounts[2].Name, namePullSecret)
+			assert.Equal(t, found.Spec.Template.Spec.Containers[0].VolumeMounts[1].Name, namePullSecret)
 
 			if test.caCert {
 				assert.Equal(t, found.Spec.Template.Spec.Volumes[2].Name, NameTrustedCAVolume)
-				assert.Equal(t, found.Spec.Template.Spec.Containers[0].VolumeMounts[3].Name, NameTrustedCAVolume)
+				assert.Equal(t, found.Spec.Template.Spec.Containers[0].VolumeMounts[2].Name, NameTrustedCAVolume)
 			}
 
-			initContainer := found.Spec.Template.Spec.InitContainers[0]
-			assert.Equal(t, &initContainer, resources.graphDataInitContainer)
 		})
 	}
 }
