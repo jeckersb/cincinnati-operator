@@ -397,12 +397,6 @@ func (k *kubeResources) newVolumes(instance *cv1.UpdateService) []corev1.Volume 
 			},
 		},
 		{
-			Name: "cincinnati-graph-data",
-			VolumeSource: corev1.VolumeSource{
-				EmptyDir: &corev1.EmptyDirVolumeSource{},
-			},
-		},
-		{
 			Name: namePullSecret,
 			VolumeSource: corev1.VolumeSource{
 				Secret: &corev1.SecretVolumeSource{
@@ -497,20 +491,6 @@ func newTrustedClusterCAConfig(instance *cv1.UpdateService, clusterCA *corev1.Co
 			Namespace:   instance.Namespace,
 			Labels:      map[string]string{"config.openshift.io/inject-trusted-cabundle": "true"},
 			Annotations: map[string]string{"release.openshift.io/create-only": "true"},
-		},
-	}
-}
-
-func (k *kubeResources) newGraphDataInitContainer(instance *cv1.UpdateService) *corev1.Container {
-	return &corev1.Container{
-		Name:            NameInitContainerGraphData,
-		Image:           instance.Spec.GraphDataImage,
-		ImagePullPolicy: corev1.PullAlways,
-		VolumeMounts: []corev1.VolumeMount{
-			{
-				Name:      "cincinnati-graph-data",
-				MountPath: "/var/lib/cincinnati/graph-data",
-			},
 		},
 	}
 }
